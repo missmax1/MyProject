@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts 
+Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+<struts-config>
+	<form-beans>
+		<form-bean name="nguoiDungForm" type="form.NguoiDungForm" />
+		<form-bean name="phienDauGiaForm" type="form.PhienDauGiaForm" />
+		<form-bean name="lsDGSPForm" type="form.LichSuDauGiaSanPhamForm"></form-bean>
+	</form-beans>
+	<action-mappings>
+		
+		<action input="/dangNhap.jsp" name="nguoiDungForm"
+			path="/dang-nhap" scope="request" type="action.NguoiDungAction">
+			<forward name="thanhCong" path="/trang-chu.do" redirect="true"/>
+			<forward name="thatBai" path="/dangNhap.jsp" />
+		</action>
+		
+		<action input="/trangChu.jsp" name="phienDauGiaForm"
+			path="/trang-chu" scope="request" type="action.PhienDauGiaAction">
+			<forward name="index" path="/trangChu.jsp" />
+		</action>
+		
+		<action input="/listSPTheoMa.jsp" name="phienDauGiaForm" 
+		path="/listSPTheoMa" scope="request" type="action.ListPDGTheoMaLSPAction"> 
+			<forward name="listSP" path="/listSPTheoMa.jsp"></forward>
+		</action>
+		
+		<action input="/timkiem.jsp" name="phienDauGiaForm" 
+		path="/timKiem" scope="request" type="action.TimKiemPDGAction"> 
+			<forward name="list" path="/timKiem.jsp"></forward>
+		</action>
+	
+		<action input="/topWinner.jsp" name="lsDGSPForm" 
+		path="/topWiner" scope="request" type="action.ListTopWinnerAction">
+			<forward name="topWin" path="/topWinner.jsp"></forward>
+		</action> 
+	
+		<action input="/chiTietSanPham.jsp" 
+		path="/chitiet" scope="request" type="action.ChiTietPDGAction" name="phienDauGiaForm"> 
+			<forward name="chitiet" path="/chiTietSanPham.jsp"></forward>
+		</action>
+	
+		<action input="/capNhatThongTin.jsp" name="nguoiDungForm"
+			path="/capNhatThongTin" scope="request" type="action.CapNhatTaiKhoanAction">
+			<forward name="capNhat" path="/capNhatThongTin.jsp"></forward>
+			<forward name="capNhatXong" path="/capNhatThongTin.jsp"></forward>
+		</action>
+	
+	</action-mappings>
+	<message-resources parameter="action.ApplicationResources" />
+	
+</struts-config>
