@@ -17,9 +17,11 @@ import form.PhienDauGiaForm;
 import model.bean.LichSuDauGiaSanPham;
 import model.bean.LoaiSanPham;
 import model.bean.PhienDauGia;
+import model.bean.SanPhamDauGia;
 import model.bo.LichSuDauGiaSanPhamBO;
 import model.bo.LoaiSanPhamBO;
 import model.bo.PhienDauGiaBO;
+import model.bo.SanPhamDauGiaBO;
 
 public class ChiTietPDGAction extends Action{
 
@@ -41,13 +43,16 @@ public class ChiTietPDGAction extends Action{
 		phienDG =phienDGBO.getPDGofMaPDG(maPDG);
 		phienDauGiaForm.setListPhienDauGia(phienDG);
 		// lay list lich su tham gia dau gia tuong ung vs mapdg
-		
+		// những ng đã tham gia vào đấu giá
 		LichSuDauGiaSanPhamBO lichSuDauGiaBO = new LichSuDauGiaSanPhamBO();
 		ArrayList<LichSuDauGiaSanPham> listLSDGSP;
 		listLSDGSP = lichSuDauGiaBO.getlistLSDGSP(maPDG);
 		phienDauGiaForm.setListLSDGSP(listLSDGSP);
-		System.out.println("ppppppppppppppppppppppppppppppppppppppp" + listLSDGSP.size());
-		
+		// lay list các sản phẩm tương ứng với pdg đó
+		SanPhamDauGiaBO sanPhamDauGiaBO = new SanPhamDauGiaBO();;
+		ArrayList<SanPhamDauGia> listSanPham;
+		listSanPham = sanPhamDauGiaBO.getListSanPham(maPDG);
+		phienDauGiaForm.setListSanPham(listSanPham);
 		
 		return mapping.findForward("chitiet");
 	}

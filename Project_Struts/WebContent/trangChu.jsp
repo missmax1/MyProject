@@ -9,6 +9,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html lang="en">
@@ -57,9 +58,7 @@
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Danh mục sản phẩm đấu giá<span class="caret"></span></a>
         <ul class="dropdown-menu">
          
-          
           <logic:iterate name="phienDauGiaForm" property="listLoaiSP" id="loaiSP">
-			 		
 					 <li>
 					 <bean:define id="maLoaiSP" name="loaiSP" property="maLoaiSP"></bean:define>
 					 <html:link action="/listSPTheoMa?maLoaiSP=${maLoaiSP}">
@@ -91,11 +90,12 @@
 								 	</html:link>	
 						          </strong>
 						          </p>
-						          <p>Số người tham gia đấu giá: <bean:write name="pDG" property="soNguoiDauGia"/></p>
+						          <b><p>Số người tham gia đấu giá: <bean:write name="pDG" property="soNguoiDauGia"/></p>
 						          <p>Giá khởi điểm: <bean:write name="pDG" property="giaDeNghi"/> VND</p>
+									</b>
 						          <div class="text-center">
 			
-						              <p><img alt="" src="img/glasshour.jpg" style="height: 18px"><b>
+						              <p><img alt="" src="img/glasshour.jpg" style	="height: 18px"><b>
 						              
 						             		
 						              		<bean:define id="id" name="pDG" property="maPDG"></bean:define>
@@ -147,10 +147,6 @@
 			    
 			    
 			  	</logic:iterate>
-			  	
-			  	
-	            		
-	            	
 			  	
    </div> 
    </hr>

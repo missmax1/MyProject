@@ -80,7 +80,7 @@
 
  			<logic:empty name="phienDauGiaForm" property="listPhienDauGia">
  				<script type="text/javascript">
- 				swal({title: "Sản phẩm hiện đang được cập nhật!",
+ 				swal({title: "Sản phẩm hiện không tìm thấy!",
  					  text: "Xác nhận để quay lại" },
  						function(isConfirm){
  						 window.history.go(-1);	

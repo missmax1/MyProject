@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionMapping;
 import model.bean.LichSuDauGiaSanPham;
 import model.bean.LoaiSanPham;
 import model.bean.PhienDauGia;
+import model.bean.SanPhamDauGia;
 
 public class PhienDauGiaForm extends ActionForm{
 	
@@ -19,6 +20,7 @@ public class PhienDauGiaForm extends ActionForm{
 	private ArrayList<PhienDauGia> listPhienDauGia;
 	private ArrayList<PhienDauGia> listNewPDG;
 	private ArrayList<LichSuDauGiaSanPham> listLSDGSP;
+	private ArrayList<SanPhamDauGia> listSanPham;
 	private String page;
 	private String noOfPages;
 	private String currentPage;
@@ -27,9 +29,12 @@ public class PhienDauGiaForm extends ActionForm{
 	
 	
 	
-	
-	
-
+	public ArrayList<SanPhamDauGia> getListSanPham() {
+		return listSanPham;
+	}
+	public void setListSanPham(ArrayList<SanPhamDauGia> listSanPham) {
+		this.listSanPham = listSanPham;
+	}
 	public ArrayList<LichSuDauGiaSanPham> getListLSDGSP() {
 		return listLSDGSP;
 	}

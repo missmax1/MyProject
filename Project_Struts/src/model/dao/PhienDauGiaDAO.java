@@ -5,10 +5,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,7 +23,7 @@ public class PhienDauGiaDAO {
 
 	String url = "jdbc:sqlserver://localhost:1433;databaseName=WebsiteDauGia";
 	String userName = "sa";
-	String password = "12345678";
+	String password = "123";
 	Connection connection;
 	
 	void connect(){
@@ -64,7 +64,7 @@ public class PhienDauGiaDAO {
 						"group by A.MaPDG,A.TenPDG,A.GiaDeNghi,A.ThoiGianBatDau,A.ThoiGianKetThuc,C.TenHinhAnh order by tong desc,A.MaPDG "+
 						" OFFSET "+offsetRow+" ROWS FETCH NEXT "+recordsPerPage+" ROWS ONLY";
 		ResultSet rs = null;
-		System.out.println("123123123123123123123333333333 "+ sql);
+		System.out.println("123123123123123123123333333333  666666666666666666666666666"+ sql);
 		try {
 			stmt = connection.createStatement();
 			rs = stmt.executeQuery(sql);
@@ -111,34 +111,39 @@ public class PhienDauGiaDAO {
 				System.out.println(diff);
 				System.out.println("SFSDFSDFSDFD"+countdown);
 				pDG.setCountDown(countdown);
-				
-				
-				long diffSeconds = diff / 1000 % 60;
-				long diffMinutes = diff / (60 * 1000) % 60;
-				long diffHours = diff / (60 * 60 * 1000) % 24;
-				long diffDays = diff / (24 * 60 * 60 * 1000);
-				
-				System.out.println("phien " + rs.getString("TenPDG") + " ");
-				System.out.print(diffDays + " days, ");
-				System.out.print(diffHours + " hours, ");
-				System.out.print(diffMinutes + " minutes, ");
-				System.out.print(diffSeconds + " seconds.\n");
 
-				
-				
-				
 				pDG.setSoNguoiDauGia(rs.getString("tong"));
-				
-				if(rs.getString("giahientai")==null){
-					pDG.setGiaHienTai(pDG.getGiaDeNghi());
-				}
-				else
-				pDG.setGiaHienTai(rs.getString("giahientai"));
 				pDG.setHinhAnh(rs.getString("TenHinhAnh"));
 				// lay hinh anh
-				
-				
-				
+				//chuyen doi format ngay
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				try {
+				Date tgkt = formatter.parse(rs.getString("ThoiGianKetThuc"));
+				Date tgbd = formatter.parse(rs.getString("ThoiGianBatDau"));
+				SimpleDateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				pDG.setThoiGianKetThuc(formatter1.format(tgkt)); 
+				pDG.setThoiGianBatDau(formatter1.format(tgbd)); 
+				} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				}
+				// convert currenry
+				System.out.println("eeeeeeeeeeeeeeeeeeeeee "+rs.getString("giahientai"));
+				Double giadenghi = Double.parseDouble(rs.getString("giadenghi").toString());
+				DecimalFormat qw = new DecimalFormat("###,###,###");
+				String respdenghi = (qw.format(giadenghi*1000));
+				respdenghi = respdenghi.replace(",", ".");
+				pDG.setGiaDeNghi(respdenghi);
+				if(rs.getString("giahientai")==null){
+					pDG.setGiaHienTai(respdenghi);
+				}
+				else
+				{
+					Double giatra = Double.parseDouble(rs.getString("giahientai").toString());
+					String resp = (qw.format(giatra*1000));
+					resp = resp.replaceAll(",", ".");	
+					pDG.setGiaHienTai(resp);
+				}
 				
 				list.add(pDG);
 			}
@@ -225,34 +230,38 @@ public class PhienDauGiaDAO {
 					System.out.println(diff);
 					System.out.println("SFSDFSDFSDFD"+countdown);
 					pDG.setCountDown(countdown);
-					
-					
-					long diffSeconds = diff / 1000 % 60;
-					long diffMinutes = diff / (60 * 1000) % 60;
-					long diffHours = diff / (60 * 60 * 1000) % 24;
-					long diffDays = diff / (24 * 60 * 60 * 1000);
-					
-					System.out.println("phien " + rs.getString("TenPDG") + " ");
-					System.out.print(diffDays + " days, ");
-					System.out.print(diffHours + " hours, ");
-					System.out.print(diffMinutes + " minutes, ");
-					System.out.print(diffSeconds + " seconds.\n");
-	
-					
-					
-					
 					pDG.setSoNguoiDauGia(rs.getString("tong"));
-					
+					// lay hinh anh
+					pDG.setHinhAnh(rs.getString("TenHinhAnh"));
+					//chuyen doi format ngay
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+					try {
+					Date tgkt = formatter.parse(rs.getString("ThoiGianKetThuc"));
+					Date tgbd = formatter.parse(rs.getString("ThoiGianBatDau"));
+					SimpleDateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+					pDG.setThoiGianKetThuc(formatter1.format(tgkt)); 
+					pDG.setThoiGianBatDau(formatter1.format(tgbd)); 
+					} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					}
+					// convert currenry
+					System.out.println("eeeeeeeeeeeeeeeeeeeeee "+rs.getString("giahientai"));
+					Double giadenghi = Double.parseDouble(rs.getString("giadenghi").toString());
+					DecimalFormat qw = new DecimalFormat("###,###,###");
+					String respdenghi = (qw.format(giadenghi*1000));
+					respdenghi = respdenghi.replace(",", ".");
+					pDG.setGiaDeNghi(respdenghi);
 					if(rs.getString("giahientai")==null){
-						pDG.setGiaHienTai(pDG.getGiaDeNghi());
+						pDG.setGiaHienTai(respdenghi);
 					}
 					else
-					pDG.setGiaHienTai(rs.getString("giahientai"));
-					
-					// lay hinh anh
-					
-					pDG.setHinhAnh(rs.getString("TenHinhAnh"));
-					
+					{
+						Double giatra = Double.parseDouble(rs.getString("giahientai").toString());
+						String resp = (qw.format(giatra*1000));
+						resp = resp.replaceAll(",", ".");	
+						pDG.setGiaHienTai(resp);
+					}
 					
 					list.add(pDG);
 				}
@@ -353,29 +362,39 @@ public class PhienDauGiaDAO {
 				System.out.println(diff);
 				System.out.println("SFSDFSDFSDFD"+countdown);
 				pDG.setCountDown(countdown);
-				
-				
-				long diffSeconds = diff / 1000 % 60;
-				long diffMinutes = diff / (60 * 1000) % 60;
-				long diffHours = diff / (60 * 60 * 1000) % 24;
-				long diffDays = diff / (24 * 60 * 60 * 1000);
-				
-				System.out.println("phien " + rs.getString("TenPDG") + " ");
-				System.out.print(diffDays + " days, ");
-				System.out.print(diffHours + " hours, ");
-				System.out.print(diffMinutes + " minutes, ");
-				System.out.print(diffSeconds + " seconds.\n");
-
 				pDG.setSoNguoiDauGia(rs.getString("tong"));
-				
-				if(rs.getString("giahientai")==null){
-					pDG.setGiaHienTai(pDG.getGiaDeNghi());
-				}
-				else
-				pDG.setGiaHienTai(rs.getString("giahientai"));
 				// lay hinh anh
 				pDG.setHinhAnh(rs.getString("TenHinhAnh"));
-					
+				//chuyen doi format ngay
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				try {
+				Date tgkt = formatter.parse(rs.getString("ThoiGianKetThuc"));
+				Date tgbd = formatter.parse(rs.getString("ThoiGianBatDau"));
+				SimpleDateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				pDG.setThoiGianKetThuc(formatter1.format(tgkt)); 
+				pDG.setThoiGianBatDau(formatter1.format(tgbd)); 
+				} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				}
+				// convert currenry
+				System.out.println("eeeeeeeeeeeeeeeeeeeeee "+rs.getString("giahientai"));
+				Double giadenghi = Double.parseDouble(rs.getString("giadenghi").toString());
+				DecimalFormat qw = new DecimalFormat("###,###,###");
+				String respdenghi = (qw.format(giadenghi*1000)+" VNĐ");
+				respdenghi = respdenghi.replace(",", ".");
+				pDG.setGiaDeNghi(respdenghi);
+				if(rs.getString("giahientai")==null){
+					pDG.setGiaHienTai(respdenghi);
+				}
+				else
+				{
+					Double giatra = Double.parseDouble(rs.getString("giahientai").toString());
+					String resp = (qw.format(giatra*1000)+" VNĐ");
+					resp = resp.replaceAll(",", ".");	
+					pDG.setGiaHienTai(resp);
+				}
+				
 				list.add(pDG);
 			}
 			
@@ -463,33 +482,39 @@ public class PhienDauGiaDAO {
 				System.out.println(diff);
 				System.out.println("SFSDFSDFSDFD"+countdown);
 				pDG.setCountDown(countdown);
-				
-				
-				long diffSeconds = diff / 1000 % 60;
-				long diffMinutes = diff / (60 * 1000) % 60;
-				long diffHours = diff / (60 * 60 * 1000) % 24;
-				long diffDays = diff / (24 * 60 * 60 * 1000);
-				
-				System.out.println("phien " + rs.getString("TenPDG") + " ");
-				System.out.print(diffDays + " days, ");
-				System.out.print(diffHours + " hours, ");
-				System.out.print(diffMinutes + " minutes, ");
-				System.out.print(diffSeconds + " seconds.\n");
 
-				
-				
-				
 				pDG.setSoNguoiDauGia(rs.getString("tong"));
-				
-				if(rs.getString("giahientai")==null){
-					pDG.setGiaHienTai(pDG.getGiaDeNghi());
-				}
-				else
-				pDG.setGiaHienTai(rs.getString("giahientai"));
-				
 				// lay hinh anh
 				pDG.setHinhAnh(rs.getString("TenHinhAnh"));
-				
+				//chuyen doi format ngay
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				try {
+				Date tgkt = formatter.parse(rs.getString("ThoiGianKetThuc"));
+				Date tgbd = formatter.parse(rs.getString("ThoiGianBatDau"));
+				SimpleDateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				pDG.setThoiGianKetThuc(formatter1.format(tgkt)); 
+				pDG.setThoiGianBatDau(formatter1.format(tgbd)); 
+				} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				}
+				// convert currenry
+				System.out.println("eeeeeeeeeeeeeeeeeeeeee "+rs.getString("giahientai"));
+				Double giadenghi = Double.parseDouble(rs.getString("giadenghi").toString());
+				DecimalFormat qw = new DecimalFormat("###,###,###");
+				String respdenghi = (qw.format(giadenghi*1000)+" VNĐ");
+				respdenghi = respdenghi.replace(",", ".");
+				pDG.setGiaDeNghi(respdenghi);
+				if(rs.getString("giahientai")==null){
+					pDG.setGiaHienTai(respdenghi);
+				}
+				else
+				{
+					Double giatra = Double.parseDouble(rs.getString("giahientai").toString());
+					String resp = (qw.format(giatra*1000)+" VNĐ");
+					resp = resp.replaceAll(",", ".");	
+					pDG.setGiaHienTai(resp);
+				}
 				
 				
 				list.add(pDG);
@@ -545,13 +570,12 @@ public class PhienDauGiaDAO {
 				pDG = new PhienDauGia();
 				pDG.setMaPDG(rs.getString("mapdg"));
 				pDG.setTenPDG(rs.getString("TenPDG"));
-				pDG.setGiaDeNghi(rs.getString("GiaDeNghi"));
 				pDG.setThoiGianBatDau(rs.getString("ThoiGianBatDau"));
 				pDG.setThoiGianKetThuc(rs.getString("ThoiGianKetThuc"));
 				pDG.setTenNguoiTao(rs.getString("TenNguoiDung"));
 				// bien doi time
 				//HH converts hour in 24 hours format (0-23), day calculation
-				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 				
 				// lấy ngày giờ hiện tại
 				String curentDate = format.format(new Date());
@@ -560,9 +584,6 @@ public class PhienDauGiaDAO {
 				// lấy ngày giờ kết thúc đấu giá
 				String temp = pDG.getThoiGianKetThuc();
 				temp = temp.replace("-", "/");
-//				System.out.println("temp"+temp);
-
-				
 
 				Date d1 = null; // thời gian kết thúc
 				Date d2 = null; // thời gian bắt đầu
@@ -573,40 +594,40 @@ public class PhienDauGiaDAO {
 				
 				//in milliseconds
 				long diff = d1.getTime() - d2.getTime();
-				
 				String countdown = String.valueOf(diff);
-				System.out.println(diff);
-				System.out.println("SFSDFSDFSDFD"+countdown);
 				pDG.setCountDown(countdown);
-				
-				
-				long diffSeconds = diff / 1000 % 60;
-				long diffMinutes = diff / (60 * 1000) % 60;
-				long diffHours = diff / (60 * 60 * 1000) % 24;
-				long diffDays = diff / (24 * 60 * 60 * 1000);
-				
-				System.out.println("phien " + rs.getString("TenPDG") + " ");
-				System.out.print(diffDays + " days, ");
-				System.out.print(diffHours + " hours, ");
-				System.out.print(diffMinutes + " minutes, ");
-				System.out.print(diffSeconds + " seconds.\n");
-
-				
-				
-				
 				pDG.setSoNguoiDauGia(rs.getString("tong"));
-				
+				//lay hinh anh
+				pDG.setHinhAnh(rs.getString("TenHinhAnh")); 
+				//chuyen doi format ngay
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				try {
+				Date tgkt = formatter.parse(rs.getString("ThoiGianKetThuc"));
+				Date tgbd = formatter.parse(rs.getString("ThoiGianBatDau"));
+				SimpleDateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				pDG.setThoiGianKetThuc(formatter1.format(tgkt)); 
+				pDG.setThoiGianBatDau(formatter1.format(tgbd)); 
+				} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				}
+				// convert currenry
+				System.out.println("eeeeeeeeeeeeeeeeeeeeee "+rs.getString("giahientai"));
+				Double giadenghi = Double.parseDouble(rs.getString("giadenghi").toString());
+				DecimalFormat qw = new DecimalFormat("###,###,###");
+				String respdenghi = (qw.format(giadenghi*1000)+" VNĐ");
+				respdenghi = respdenghi.replace(",", ".");
+				pDG.setGiaDeNghi(respdenghi);
 				if(rs.getString("giahientai")==null){
-					pDG.setGiaHienTai(pDG.getGiaDeNghi());
+					pDG.setGiaHienTai(respdenghi);
 				}
 				else
-				pDG.setGiaHienTai(rs.getString("giahientai"));
-				pDG.setHinhAnh(rs.getString("TenHinhAnh"));
-				// lay hinh anh
-				
-				
-				
-				
+				{
+					Double giatra = Double.parseDouble(rs.getString("giahientai").toString());
+					String resp = (qw.format(giatra*1000)+" VNĐ");
+					resp = resp.replaceAll(",", ".");	
+					pDG.setGiaHienTai(resp);
+				}
 				list.add(pDG);
 			}
 			rs = stmt.executeQuery("SELECT count(*) from phiendaugia");

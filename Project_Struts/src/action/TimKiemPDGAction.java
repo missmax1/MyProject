@@ -33,7 +33,7 @@ public class TimKiemPDGAction extends Action{
 			
 			String searchText = phienDauGiaForm.getSearchText();
 			String page = phienDauGiaForm.getPage() != null ? phienDauGiaForm.getPage() : "1";
-			System.out.println("pag"+page);
+			
 			if(searchText==null || searchText.length()==0){
 				listPDG = phienDGBO.getListPDG(page);
 			}

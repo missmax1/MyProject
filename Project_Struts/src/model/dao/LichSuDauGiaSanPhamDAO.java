@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class LichSuDauGiaSanPhamDAO {
 
 	String url = "jdbc:sqlserver://localhost:1433;databaseName=WebsiteDauGia";
 	String userName = "sa";
-	String password = "12345678";
+	String password = "123";
 	Connection connection;
 	
 	void connect(){
@@ -57,9 +58,24 @@ public class LichSuDauGiaSanPhamDAO {
 		try {
 			while(rs.next()){
 				pDG = new LichSuDauGiaSanPham();
-				pDG.setThoiGian(rs.getString("ThoiGian"));
-				pDG.setGiaTra(rs.getString("GiaTra"));
 				pDG.setTenTaiKhoan(rs.getString("TenTaiKhoan"));
+				//chuyen doi format ngay
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				try {
+				Date dt = formatter.parse(rs.getString("ThoiGian"));
+				SimpleDateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy");
+				pDG.setThoiGian(formatter1.format(dt)); 
+				} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				}
+				// convert currenry
+				Double giatra = Double.parseDouble(rs.getString("GiaTra").toString());
+				DecimalFormat qw = new DecimalFormat("###,###,###");
+				String resp = (qw.format(giatra*1000)+" VNĐ");
+				resp = resp.replaceAll(",", ".");
+				pDG.setGiaTra(resp);
+				
 				list.add(pDG);
 			}
 

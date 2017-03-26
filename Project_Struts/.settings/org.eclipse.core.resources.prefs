@@ -1,6 +1,8 @@
 eclipse.preferences.version=1
+encoding//src/action/ChiTietPDGAction.java=UTF-8
 encoding//src/action/ListPDGTheoMaLSPAction.java=UTF-8
 encoding//src/action/PhienDauGiaAction.java=UTF-8
 encoding//src/action/TimKiemPDGAction.java=UTF-8
 encoding//src/model/dao/LichSuDauGiaSanPhamDAO.java=UTF-8
 encoding//src/model/dao/PhienDauGiaDAO.java=UTF-8
+encoding//src/model/dao/SanPhamDauGiaDAO.java=UTF-8

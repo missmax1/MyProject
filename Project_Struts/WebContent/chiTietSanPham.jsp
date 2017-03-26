@@ -176,7 +176,11 @@
 
 				<li>Giá khởi điểm: <b><bean:write name="pDG" property="giaDeNghi"/></b></li>
 				<li style="color:red"><b>Giá hiện tại:<h3><bean:write name="pDG" property="giaHienTai"/></h3></b>
-					<i>Thuộc về:anh tèo@5giay</i>
+					<i>Thuộc về:
+						
+						
+						
+					</i>
 				</li>
 				<li>
 					<input class="form control" type="text" style="text-align:center;font-size:110%;" value=""> 
@@ -250,15 +254,16 @@
 		</div>
 			  
 	</div>
+	<logic:iterate id="sanPham" name="phienDauGiaForm" property="listSanPham">
 	<div class="col-sm-12">
 		<ul class="nav nav-tabs">
-			<li class="active" ><a data-toggle="tab" href="#home" class="a">Giới Thiệu</a></li>
-			<li><a data-toggle="tab" href="#menu1" class="a">Hình Ảnh</a></li>
+			<li class="active" ><a data-toggle="tab" href="#home" class="a"><bean:write name="sanPham" property="tenSanPham"/> </a></li>
+			
 			
 		</ul>
 		<div class="tab-content">
 			<div style="background:#d9d9d9;margin-top:20px;" class="tab-pane fade in active" id="home">
-				<b>- Bluetooth 4.0 thế hệ thứ 2.Pin lâu lắc 20 ngày mới có thể hết<br>
+				<b>- Sản phẩm 1 : <bean:write name="sanPham" property="tenSanPham"/> <br>
 				- Tương thích với Android / iOS.</b>
 				<div class="col-sm" class="container" style="background:#ffffd1;border:1px solid black;margin:10px;padding:10px;" >
 					<b style="color:#ce6f1f">Bảo hành</b><br>
@@ -321,7 +326,8 @@
 			</div>
 		</div>
 	</div>
-		
+	</logic:iterate>
+	
 	</div>
 </logic:iterate>
 

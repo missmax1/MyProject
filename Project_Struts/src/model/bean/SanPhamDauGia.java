@@ -10,6 +10,16 @@ public class SanPhamDauGia {
 	private String thoiGianBaoHanh;
 	private String moTa;
 	private String maPDG;
+	private String tenHinhAnh;
+	
+	
+	
+	public String getTenHinhAnh() {
+		return tenHinhAnh;
+	}
+	public void setTenHinhAnh(String tenHinhAnh) {
+		this.tenHinhAnh = tenHinhAnh;
+	}
 	public String getMaSP() {
 		return maSP;
 	}

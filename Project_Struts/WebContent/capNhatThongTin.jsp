@@ -10,6 +10,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html lang="en">
@@ -184,7 +185,10 @@
  
  </div>
 <!-- Footer -->
-
+<footer class="container-fluid bg-4 text-center">
+   <h3>NHÓM 3</h3>
+</footer>
+		
 		
 									
 									

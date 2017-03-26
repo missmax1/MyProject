@@ -28,7 +28,7 @@ public class LoaiSanPhamDAO {
 
 	String url = "jdbc:sqlserver://localhost:1433;databaseName=WebsiteDauGia";
 	String userName = "sa";
-	String password = "12345678";
+	String password = "123";
 	Connection connection;
 	
 	void connect(){
