@@ -80,12 +80,19 @@
 
  			<logic:empty name="phienDauGiaForm" property="listPhienDauGia">
  				<script type="text/javascript">
- 				swal({title: "Sản phẩm hiện đang được cập nhật!",
- 					  text: "Xác nhận để quay lại" },
- 						function(isConfirm){
- 						 window.history.go(-1);	
- 					}		
- 				);
+ 				swal({
+ 					  title: "Ajax request example",
+ 					  text: "xác nhận để quay về trang chủ",
+ 					  type: "info",
+ 					  showCancelButton: true,
+ 					  closeOnConfirm: false,
+ 					  showLoaderOnConfirm: true,
+ 					},
+ 					function(){
+ 					  setTimeout(function(){
+ 					    window.location.assign("http://127.0.0.1:8080/Project_Struts/trang-chu.do");
+ 					  }, 2000);
+ 					});
  				</script>
  			</logic:empty>
  
